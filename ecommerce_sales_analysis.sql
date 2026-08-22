@@ -216,7 +216,7 @@ GROUP BY
 
 ORDER BY avg_days_between_purchases;
 
---5.Who are the customers at risk of churn based on their last purchase date?
+--5. Who are the customers at risk of churn based on their last purchase date?
 
 WITH customer_last_purchase AS (
     SELECT
@@ -234,8 +234,22 @@ WITH customer_last_purchase AS (
         c.company_name
 )
 
-SELECT *
-FROM customer_last_purchase;
+SELECT
+    customer_sk,
+    company_name,
+    last_purchase_date,
+    CURRENT_DATE - last_purchase_date AS days_since_last_purchase,
+
+    CASE
+        WHEN CURRENT_DATE - last_purchase_date > 180
+            THEN 'High Risk'
+        WHEN CURRENT_DATE - last_purchase_date > 90
+            THEN 'Medium Risk'
+        ELSE 'Low Risk'
+    END AS churn_risk
+
+FROM customer_last_purchase
+ORDER BY days_since_last_purchase DESC;
 
 --6.What is the Customer Lifetime Value (CLV) for each customer?
 
@@ -377,7 +391,7 @@ group by 1,2,3
 select
 	product_sk,
 	category_name,
-	rank() over(partition by category_name order by Revenue )
+	rank() over(partition by category_name order by Revenue desc)
 from product_revenue
 
 
