@@ -1,3 +1,35 @@
+/*
+====================================================
+E-Commerce Sales Analysis
+====================================================
+
+Database: PostgreSQL
+Schema: dw
+
+Description:
+This SQL script contains analytical queries used
+to analyze e-commerce sales performance, customer
+behavior, product performance, and revenue trends.
+
+Analysis Areas:
+1. Sales & Revenue Analysis
+2. Customer Analysis
+3. Product Analysis
+4. Time-Based Analysis
+5. Advanced SQL Analysis
+
+Author: Rehab Ali Mahmoud
+====================================================
+*/
+
+
+
+
+
+
+
+
+
 select * from dw.fact_orders
 select * from dw.dim_product
 select * from dw.dim_shipper
@@ -20,6 +52,7 @@ GROUP BY
     c.customer_sk,
     c.company_name
 ORDER BY total_revenue DESC;
+
 --2.What percentage of total revenue comes from the top 10% of customers?
 
 WITH customer_revenue AS (
